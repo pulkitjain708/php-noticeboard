@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/noticeboard/assets/css/notes.css">
+    <link rel="stylesheet" href="/noticeboard/assets/css/form.css">
+    <style>
+        div{
+            text-align: center;
+        }
+        .container{
+            display:flex;
+            justify-content: center;
+        }
+    </style>
+    <title>MCA Sem 3 Batch</title>
+</head>
+<body>
+    <div style="width:100%;">
+        <h1>MCA 3 SEMESTER NOTICEBOARD</h1>
+            <div class="container" style="width:100%">
+                <div>
+                    <input list="teacher" onblur="query()" name="by" id="by" placeholder="Posted By">
+
+                    <datalist id="teacher">
+                    <option value="Santosh Katti"></option>
+                    <option value="Dr Lekha A"></option>
+                    <option value="Tamal Dey"></option>
+                    <option value="Premlatha HM"></option>
+                    <option value="Thenmozhi S"></option>
+                    <option value="Archana A"></option>
+                    <option value="Srinivas S"></option>
+                    <option value="Sujeeth"></option>
+                </datalist>
+                </div>
+                <div>
+                    <input list="catsSel" onblur="query()" name="category" id="cat" placeholder="Enter Category">
+
+                    <datalist id="catsSel">
+                    <option value="Placements"></option>
+                    <option value="Registration"></option>
+                    <option value="Exams and Practical Schedule"></option>
+                    <option value="Extra Curricular Activities"></option>
+                </datalist>
+                </div>
+                <div>
+                    <input type="text" onblur="query()" id="title" name="title" placeholder="Enter Title Pattern">
+                </div>
+            </div>
+            <div class="container" style="width:100%">
+                <div><input type="date" name="expiry" id="from"  placeholder="From Date"></div>
+                <div><input type="date" name="expiry" id="to"  placeholder="To Date"></div>
+            </div>
+    </div>
+    <ul id="notifs">
+      </ul>
+      
+    <script>
+        function writeToScreen(d){
+            txt='';
+            let notifs=document.getElementById('notifs')
+            if(d==0){
+                    txt+=`<li>
+                    <a href="#">
+                        <h4>No Notifications to Display</h4>
+                        <p>No Events Added 🤔</p>
+                    </a>
+                        </li>`
+            }
+            else{
+            for(i=0;i<d.length;i++){
+                    txt+=`<li>
+                    <a href="#">
+                        <h4>${d[i]['title']}</h4>
+                        <p>${d[i]['description']}</p>
+                    </a>
+                        </li>`
+            }
+        }
+            notifs.innerHTML=txt
+        }
+        let query=()=>{
+            let title=document.getElementById("title").value
+            let category=document.getElementById("cat").value
+            let by=document.getElementById("by").value
+            let from=document.getElementById("from").value
+            let to=document.getElementById("to").value
+            formData=new FormData()
+            formData.append('title', title);
+            formData.append('category',category);
+            formData.append('by', by);
+            formData.append('for','MCA 3 sem');
+            formData.append('from', from);
+            formData.append('to',to);
+        fetch('/noticeboard/php/fetchNotices.php',{method:'post',body:formData})
+        .then(res=>res.json())
+        .then(d=>writeToScreen(d))
+        }
+        query();
+    </script>
+</body>
+</html>

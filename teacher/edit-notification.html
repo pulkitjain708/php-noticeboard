@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/noticeboard/assets/css/form.css">
+</head>
+<body>
+    <div style="text-align: center;">
+        <h1>Edit Notification</h1>
+        <select name="notifs" id="notifs"> 
+            <option selected>Choose ID </option>
+        </select>
+        <form action="/noticeboard/php/editChangesMade.php" method='post'>
+            <input name="idNot" type="text" id="editId" placeholder="ID">
+                    <input type="text" name="meta"  id="editMeta" placeholder="Meta Information">
+        
+                    <input type="text" name='title' id="editTitle" placeholder="Enter Title">
+    
+                    <textarea name='desc' cols="30" id="editDescription" rows="10" placeholder="Description"></textarea>
+    
+                    <input type="text" placeholder="Links" name="link"  id="editLink">
+    
+                        <input type="date" name="expiry" id="editExpiry" min='2021-01-01' max='2022-12-31' placeholder="Due Date">
+    
+                        <button type="submit">Submit Changes</button>
+                        </form>
+    </div>
+    <script>
+
+          fetch('/noticeboard/php/count.php')
+    .then(res=>res.json())
+    .then(d=>{
+         notifs=document.getElementById('notifs')
+        for(let i=1;i<=Number(d);i++){
+            let option=document.createElement('OPTION');
+            option.setAttribute('value',i);
+            var text = document.createTextNode(i);
+            option.appendChild(text)
+            notifs.appendChild(option);
+        }
+    })     
+
+    document.getElementById('notifs').onchange=(e)=>{
+        let id = notifs.value;
+        let formData = new FormData();
+        formData.append('id', id);
+        fetch('/noticeboard/php/postIdForEdit.php',{method:"POST",body:formData})
+        .then(res=>res.json())
+        .then(d=>writeToForm(d))
+    }
+
+    function writeToForm(d){
+           d=d[0]
+           // console.log(d)
+           document.getElementById('editId').value=d['id'] 
+        //    document.getElementById('editBy').value=d['byName']
+        //     document.getElementById('editFor').value=d['forName']
+            document.getElementById('editMeta').value=d['meta']
+         //   document.getElementById('editCategory').value=d['category']
+            document.getElementById('editTitle').value=d['title']
+           document.getElementById('editLink').value=d['link']
+            document.getElementById('editExpiry').value=d['expiry']
+            document.getElementById('editDescription').innerText=d['description']
+        }
+    </script>
+</body>
+</html>

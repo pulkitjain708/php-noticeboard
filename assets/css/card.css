@@ -1,0 +1,18 @@
+
+.text-card {
+    width: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  .heading {
+      background-color: #FF9100;
+      color: white;
+      padding: 5px 5px;
+      font-size: 20px;
+  }
+  
+  .text-box {
+      padding:5px;
+  }
+  

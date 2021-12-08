@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href='/noticeboard/assets/css/sidebar.css'>
+    <title>Student's Board</title>
+    <style>
+        .date-time,h1,h3{
+            padding:5px;
+            text-shadow: 3px 3px 3px red;
+          color:white;
+          text-decoration:double;
+            text-align: center;
+            transition-property: text-shadow;
+  transition-duration: 2s;
+        }
+        h1,h3:hover{
+          text-shadow: 10px 10px 10px red;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidenav">
+        <div class='date-time'>
+            <h1 id="time"></h1>
+            <h3 id='date'></h3>
+    </div>
+        <h3 class='message'>Welcome Student</h3>
+        <a href="/noticeboard/index.html">LOGOUT(X)</a>
+        <button onclick="render(0)">MCA SEM 1 Notifications</button>
+        <!-- <button onclick="render(1)">MCA SEM 2 Notifications</button> -->
+        <button onclick="render(1)">MCA SEM 3 Notification</button>
+        <!-- <button onclick="render(3)">MCA SEM 4 Notification</button> -->
+      </div>
+      <div class="main" id="screen">
+
+      </div>
+      <script>
+         function render(arg){
+            screen=document.getElementById('screen') 
+            str=""
+              if(arg==0)
+              str="1.html"
+              else if(arg==1)
+              str="2.html"
+              screen.innerHTML=`<iframe frameborder="no" src="${str}" height="900px" scrolling="no" width="100%" title="Iframe Example"></iframe>`;
+            }
+          let date = new Date().toDateString().split(" ");
+          document.getElementById('date').innerText=`${date[0]} ${date[2]},${date[1]} ${date[3]}`;
+          let hTime=document.getElementById('time')
+          setInterval(()=>{
+              hours=new Date().getHours();
+              postfix=hours>=11?"PM":"AM";
+              minutes=new Date().getMinutes();
+              minutes=minutes<=9?'0'+minutes:minutes;  
+            hTime.innerText=`${hours%12}:${minutes} ${postfix}`;
+          },1000*60)
+      </script>
+    </body>
+</html>

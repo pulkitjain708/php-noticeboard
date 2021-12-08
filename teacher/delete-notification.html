@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/noticeboard/assets/css/form.css">
+    <link rel="stylesheet" href="/noticeboard/assets/css/table.css">
+</head>
+<body>
+    <div style="text-align: center;">
+        <h1>Delete Notification</h1>
+        <table style="width:100%;" class="styled-table">
+            <thead>
+                <tr>
+                    <th>Posted By</th>
+                    <th>Posted For</th>
+                    <th>Category</th>
+                    <th>Title</th>
+                    <th>Due Date</th>
+                    <th>Delete(X)</th>
+                </tr>
+            </thead>
+            <tbody id='tapp'>
+                
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function deleteNoti(d){
+            document.getElementById(d).remove();
+            formData=new FormData()
+            formData.append('id', d);
+            fetch('/noticeboard/php/delete.php',{method:"POST",body:formData})
+            .then(res=>res.json())
+            .then(d=>d==1?alert("Deleted"):alert("Error Deleting"))
+        }
+        function appendToTable(d){
+            let tapp=document.getElementById('tapp');
+            txt=''
+            for(i=0;i<d.length;i++){
+                txt+=`
+                <tr id='${d[i]['id']}'>
+                    <td>${d[i]['byName']}</td>
+                    <td>${d[i]['forName']}</td>
+                    <td>${d[i]['category']}</td>
+                    <td>${d[i]['title']}</td>
+                    <td>${d[i]['expiry']}</td>
+                    <td><button onclick='deleteNoti(${d[i]['id']})'>X</button></td>                    
+                    </tr>
+                `;
+            }
+            tapp.innerHTML=txt;
+            tapp.lastChild.setAttribute('class','active-row')
+        }
+        fetch("/noticeboard/php/showDeleteable.php")
+        .then(res=>res.json())
+        .then(d=>appendToTable(d))
+    </script>
+</body>
+</html>

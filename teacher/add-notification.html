@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/noticeboard/assets/css/form.css">
+</head>
+<body>
+    <div style="text-align: center;">
+        <h1>Add Notification</h1>
+        <form action="/noticeboard/php/addN.php" method='post'>
+        <input list="teacher" name="by" id="selT" placeholder="Posted By">
+
+                    <datalist id="teacher">
+                    <option value="Santosh Katti"></option>
+                    <option value="Dr Lekha A"></option>
+                    <option value="Tamal Dey"></option>
+                    <option value="Premlatha HM"></option>
+                    <option value="Thenmozhi S"></option>
+                    <option value="Archana A"></option>
+                    <option value="Srinivas S"></option>
+                    <option value="Sujeeth"></option>
+                </datalist>
+
+                <input list="forSt" name="forSt" id="selFor" placeholder="Posted For">
+
+                    <datalist id="forSt">
+                    <option value="MCA 1 sem"></option>
+                    <option value="MCA 2 sem"></option>
+                    <option value="MCA 3 sem"></option>
+                    <option value="MCA 4 sem"></option>
+                </datalist>
+
+                <input type="text" name="meta" id="" placeholder="Meta Information">
+
+                <input list="catsSel" name="cats" id="catts" placeholder="Enter Category">
+
+                    <datalist id="catsSel">
+                    <option value="Placements"></option>
+                    <option value="Registration"></option>
+                    <option value="Exams and Practical Schedule"></option>
+                    <option value="Extra Curricular Activities"></option>
+                </datalist>
+
+                <input type="text" name='title' placeholder="Enter Title">
+
+                <textarea name="desc" id="" cols="30" rows="10" placeholder="Description"></textarea>
+
+                <input type="text"  
+                    placeholder="Links"      name="links" id="">
+
+                    <input type="date" name="expiry" id="expiry" min='2021-01-01' max='2022-12-31' placeholder="Due Date">
+
+                    <button type="submit">Add Notification</button>
+                    </form>
+    </div>
+</body>
+</html>
